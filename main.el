@@ -49,7 +49,8 @@ This function should only modify configuration layer settings."
      helm
      (lsp :variables
           lsp-keymap-prefix "C-c C-l"
-          lsp-log-io t)
+          lsp-enable-indentation nil
+          lsp-log-io nil)
      ;; markdown
      multiple-cursors
      org
@@ -71,7 +72,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(matlab-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -550,10 +551,13 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  (spacemacs/do-after-display-system-init
+   (spacemacs/load-spacemacs-env))
+
   (setq custom-file (concat user-emacs-directory "custom.el"))
   (load custom-file 'noerror)
-  (setq lsp-log-io t)
   (setq helm-swoop-speed-or-color t)
+  (setq vc-follow-symlinks t)
 
   (my/use-persistent-history t)
   (my/init-org)
